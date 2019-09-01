@@ -2,7 +2,8 @@ import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import Congrats from './Congrats';
-import { findTagsWithTestAttribute } from './test/testUtils';
+import { findTagsWithTestAttribute, checkProps } from './test/testUtils';
+import PropTypes from 'prop-types'; 
 
 configure({ adapter: new Adapter() });
 
@@ -33,4 +34,10 @@ it("renders no text when the SUCCESS prop is FALSE", () => {
 it("renders nonempty congrats message when the SUCCESS prop is true", () => {
   const wrapper = createShallowAppWrapper({ success: true });
   expect(findTagsWithTestAttribute(wrapper, 'congrats-message').text()).not.toBe('');
+});
+
+// check-prop-types
+it("does not throw a warning with expected props", () => {
+  const expectedProps = { success: false };
+  checkProps(Congrats, expectedProps);
 });
