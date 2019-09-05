@@ -3,7 +3,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import Congrats from './Congrats';
 import { findTagsWithTestAttribute, checkProps } from './test/testUtils';
-import PropTypes from 'prop-types'; 
 
 configure({ adapter: new Adapter() });
 
@@ -18,12 +17,12 @@ return wrapper;
 }
 
 it("renders without errors", () => {
-  const wrapper = createShallowAppWrapper();
+  const wrapper = createShallowAppWrapper({ success: false });
   expect(findTagsWithTestAttribute(wrapper, 'component-congrats').length).toBe(1);
 });
 
 it("matches the snapshot", () => {
-  expect(shallow(<Congrats />).debug()).toMatchSnapshot();
+  expect(shallow(<Congrats success={false} />).debug()).toMatchSnapshot();
 })
 
 it("renders no text when the SUCCESS prop is FALSE", () => {
