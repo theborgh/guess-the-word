@@ -1,19 +1,19 @@
-import { configure, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
 import React from 'react';
 import Congrats from './Congrats';
 import { findTagsWithTestAttribute, checkProps } from './test/testUtils';
 
-configure({ adapter: new Adapter() });
+const defaultProps = { success: false };
 
 const createShallowAppWrapper = (props={}, state=null) => {
-  const wrapper = shallow(<Congrats {...props} />);
+  const setupProps = { ...defaultProps, ...props };
+  const wrapper = shallow(<Congrats {...setupProps  } />);
 
   if (state) {
     wrapper.setState(state);
   }
 
-return wrapper;
+  return wrapper;
 }
 
 it("renders without errors", () => {
