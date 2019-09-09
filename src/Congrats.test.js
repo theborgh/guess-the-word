@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme';
 import React from 'react';
 import Congrats from './Congrats';
-import { findTagsWithTestAttribute, checkProps } from './test/testUtils';
+import { findTagsWithTestAttribute, checkProps } from '../test/testUtils';
 
 const defaultProps = { success: false };
 
