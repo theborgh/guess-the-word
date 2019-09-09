@@ -4,38 +4,59 @@ import { findTagsWithTestAttribute, checkProps } from '../test/testUtils';
 import GuessedWords from './GuessedWords';
 
 const defaultProps = {
-  guessedWords: [{
-    guessedWord: 'train',
-    letterMatchCount: 3 
-  }]
+  guessedWords: [{ guessedWord: 'train', letterMatchCount: 3 }],
 };
 
 const setup = (props={}) => {
-  const setupProps = { ...defaultProps, ...props }; // to avoid warning that required props are missing
-  return shallow(<GuessedWords {...setupProps} />);
-}
+  const setupProps = { ...defaultProps, ...props };
+  return shallow(<GuessedWords {...setupProps } />)
+};
 
-it("does not throw warning with expected props", () => {
+test('does not throw warning with expected props', () => {
   checkProps(GuessedWords, defaultProps);
 });
 
-describe("If there are no words guessed", () => {
+describe('if there are no words guessed', () => {
   let wrapper;
   beforeEach(() => {
     wrapper = setup({ guessedWords: [] });
   });
 
-  it("renders without error", () => {
+  test('renders without error', () => {
     const component = findTagsWithTestAttribute(wrapper, 'component-guessedwords');
     expect(component.length).toBe(1);
   });
-
-  it("renders instructions to guess a word", () => {
+  
+  test('renders instructions to guess a word', () => {
     const instructions = findTagsWithTestAttribute(wrapper, 'guess-instructions');
     expect(instructions.text().length).not.toBe(0);
   });
 });
 
-describe("If there are words guessed", () => {
+describe('if there are words guessed', () => {
+  let wrapper;
+  const guessedWords = [
+    { guessedWord: 'train', letterMatchCount: 3 },
+    { guessedWord: 'agile', letterMatchCount: 1 },
+    { guessedWord: 'party', letterMatchCount: 5 },
+  ];
 
+  beforeEach(() => {
+    wrapper = setup({ guessedWords });
+  });
+
+  test ('renders without error', () => {
+    const component = findTagsWithTestAttribute(wrapper, 'component-guessedwords');
+    expect(component.length).toBe(1);
+  });
+
+  test('renders "guessed words" section', () => {
+    const guessedWordsNode = findTagsWithTestAttribute(wrapper, 'guessed-words');
+    expect(guessedWordsNode.length).toBe(1);
+  });
+
+  test('correct number of guessed words', () => {
+    const guessedWordNodes = findTagsWithTestAttribute(wrapper, 'guessed-word');
+    expect(guessedWordNodes.length).toBe(guessedWords.length);
+  });
 });
