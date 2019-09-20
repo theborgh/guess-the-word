@@ -104,4 +104,8 @@ describe("guessWord action creator call", () => {
   it("calls guessWord with input value as argument", () => {
     expect(guessWordMock.mock.calls[0][0]).toBe(guessedWord);
   });
+
+  it("clears input box after submit", () => {
+    expect(wrapper.state("currentGuess")).toBe("");
+  });
 });
