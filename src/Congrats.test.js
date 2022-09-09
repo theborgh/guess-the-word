@@ -1,38 +1,44 @@
-import { shallow } from 'enzyme';
-import React from 'react';
-import Congrats from './Congrats';
-import { findTagsWithTestAttribute, checkProps } from '../test/testUtils';
+import { shallow } from "enzyme";
+import React from "react";
+import Congrats from "./Congrats";
+import { findTagsWithTestAttribute, checkProps } from "../test/testUtils";
 
 const defaultProps = { success: false };
 
-const createShallowAppWrapper = (props={}, state=null) => {
+const createShallowAppWrapper = (props = {}, state = null) => {
   const setupProps = { ...defaultProps, ...props };
-  const wrapper = shallow(<Congrats {...setupProps  } />);
+  const wrapper = shallow(<Congrats {...setupProps} />);
 
   if (state) {
     wrapper.setState(state);
   }
 
   return wrapper;
-}
+};
 
 it("renders without errors", () => {
   const wrapper = createShallowAppWrapper({ success: false });
-  expect(findTagsWithTestAttribute(wrapper, 'component-congrats').length).toBe(1);
+  expect(findTagsWithTestAttribute(wrapper, "component-congrats").length).toBe(
+    1
+  );
 });
 
 it("matches the snapshot", () => {
   expect(shallow(<Congrats success={false} />).debug()).toMatchSnapshot();
-})
+});
 
 it("renders no text when the SUCCESS prop is FALSE", () => {
   const wrapper = createShallowAppWrapper({ success: false });
-  expect(findTagsWithTestAttribute(wrapper, 'component-congrats').text()).toBe('');
+  expect(findTagsWithTestAttribute(wrapper, "component-congrats").text()).toBe(
+    ""
+  );
 });
 
 it("renders nonempty congrats message when the SUCCESS prop is true", () => {
   const wrapper = createShallowAppWrapper({ success: true });
-  expect(findTagsWithTestAttribute(wrapper, 'congrats-message').text()).not.toBe('');
+  expect(
+    findTagsWithTestAttribute(wrapper, "congrats-message").text()
+  ).not.toBe("");
 });
 
 // check-prop-types
